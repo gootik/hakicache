@@ -1,0 +1,17 @@
+{application, estatic,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { estatic_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    estatic
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
