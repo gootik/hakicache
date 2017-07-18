@@ -1,12 +1,11 @@
-{application, estatic,
- [{description, "An OTP application"},
+{application, haki,
+ [{description, "Haki Cache"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { estatic_app, []}},
+  {mod, { haki_app, []}},
   {applications,
    [kernel,
-    stdlib,
-    estatic
+    stdlib
    ]},
   {env,[]},
   {modules, []},

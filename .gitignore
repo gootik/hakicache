@@ -1,3 +1,5 @@
+*.S
+*.dis
 *.ets
 *.crashdump
 .rebar3

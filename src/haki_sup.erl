@@ -1,8 +1,8 @@
 %%%-------------------------------------------------------------------
-%% @doc estatic top level supervisor.
+%% @doc haki top level supervisor.
 %% @end
 %%%-------------------------------------------------------------------
--module(estatic_sup).
+-module(haki_sup).
 
 -behaviour(supervisor).
 

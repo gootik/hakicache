@@ -1,8 +1,8 @@
 %%%-------------------------------------------------------------------
-%% @doc estatic public API
+%% @doc haki public API
 %% @end
 %%%-------------------------------------------------------------------
--module(estatic_app).
+-module(haki_app).
 
 -behaviour(application).
 
@@ -10,7 +10,7 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-    estatic_sup:start_link().
+    haki_sup:start_link().
 
 stop(_State) ->
     ok.

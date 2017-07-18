@@ -1,0 +1,36 @@
+-module(haki_test).
+
+-include_lib("eunit/include/eunit.hrl").
+
+-record(complex_record_test, {
+    some_list = [1,2,3],
+    map = #{
+        a => 'A-OK'
+    },
+    tuple = {1,2,3}
+}).
+
+simple_test() ->
+    Data = "MY_DATA",
+    haki:cache(test_key, Data),
+    Data = haki:get(test_key).
+
+rewrite_test() ->
+    Data = "MY_DATA",
+    haki:cache(test_key, Data),
+    Data = haki:get(test_key),
+
+    Data2 = "MY_DATA_2",
+    haki:cache(test_key, Data2),
+    Data2 = haki:get(test_key).
+
+record_test() ->
+    Data = #complex_record_test{},
+    haki:cache(test_record_key, Data),
+    Data = haki:get(test_record_key).
+
+
+record_large_test() ->
+    Data = [#complex_record_test{} || _ <- lists:seq(1,2000)],
+    haki:cache(test_record_large_key, Data),
+    Data = haki:get(test_record_large_key).
