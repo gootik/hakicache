@@ -7,7 +7,9 @@
     map = #{
         a => 'A-OK'
     },
-    tuple = {1,2,3}
+    tuple = {1,2,3},
+    string = "1234",
+    binary = <<"1234">>
 }).
 
 simple_test() ->
@@ -29,8 +31,17 @@ record_test() ->
     haki:cache(test_record_key, Data),
     Data = haki:get(test_record_key).
 
-
 record_large_test() ->
     Data = [#complex_record_test{} || _ <- lists:seq(1,2000)],
     haki:cache(test_record_large_key, Data),
     Data = haki:get(test_record_large_key).
+
+record_large_unicode_test() ->
+    Data = [#complex_record_test{binary = <<"∆">>} || _ <- lists:seq(1,2000)],
+    haki:cache(test_record_large_unicode_key, Data),
+    Data = haki:get(test_record_large_unicode_key).
+
+record_huge_unicode_test() ->
+    Data = [#complex_record_test{binary = <<"∆">>} || _ <- lists:seq(1,20000)],
+    haki:cache(test_record_large_unicode_key, Data),
+    Data = haki:get(test_record_large_unicode_key).
