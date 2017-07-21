@@ -113,10 +113,16 @@ asm_template(ModName, BinaryVal) ->
 
 asm_bucket_template(ModName, Map) ->
     MapSize = maps:size(Map),
-    NumLabels = MapSize + 1
-                + 3
-                + 4,
+    NumLabels = MapSize + 1 %% Map size + unknown key clause
+                + 2         %% Get function labels
+                + 4         %% Module info labels
+                + 1,        %% Padding
 
+    %% Produces function selectors ASM for each key in map
+    %% [{atom, Key},
+    %%  {f, FunctionLabel},
+    %%  ...
+    %% ]
     {KeySelects, _} = lists:foldl(
         fun(K, {IoList, I}) ->
             NewList = [IoList,
@@ -132,6 +138,10 @@ asm_bucket_template(ModName, Map) ->
             {NewList, I + 1}
         end, {[], 0}, maps:keys(Map)),
 
+    %% Produces ASM for each value in map
+    %% {label, Num}.
+    %%      {move, {literal, Val}, {x,0}}.
+    %%      return.
     {KeyValueLabels, _} = maps:fold(
         fun(_, V, {IoList, I}) ->
             B = io_lib:format("~p", [V]),
