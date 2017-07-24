@@ -22,7 +22,7 @@
 -spec compile(cache_key(), cache_value()) -> compile_ret().
 compile(Key, Val) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->
     ModName = mod_name(Key),
-    haki_beam_compiler:compile(ModName, Val);
+    haki_asm_compiler:compile(ModName, Val);
 
 compile(Key, Val) ->
     ModName = mod_name(Key),

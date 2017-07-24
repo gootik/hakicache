@@ -1,12 +1,9 @@
 %%%-------------------------------------------------------------------
-%%% @doc Using the syntax compiler has an over head of creating an AST
-%%%      and having the compiler to lint/expand records/optimize.
-%%%      Moreover, building an AST and compiling has a huge overhead on
-%%%      memory, if the data is large.
+%%% @doc NOTE: Super hacky (but fast) at the moment. If you want to use
+%%%      this compiler you have to force it by forcing it. For example:
+%%%      haki:cache(K, V, haki_beam_compiler).
 %%%
-%%%      However for the most usecases of this library you are caching
-%%%      a literal value, so if we hack the ASM file on the fly it should
-%%%      produce a decent module that can be then compiled and loaded.
+%%%      TODO: Explain what's going on.
 %%% @end
 %%%-------------------------------------------------------------------
 -module(haki_beam_compiler).
