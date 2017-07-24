@@ -41,8 +41,9 @@ compile(ModName, Val) ->
             F = atom_to_list(ModName) ++ ".erl",
             {module, Module} = code:load_binary(Module, F, Bin),
 
-            file:delete(FileName);
+            file:delete(FileName),
 
+            ok;
         Error ->
             io:format(user, "~p~n", [Error]),
             Error

@@ -26,8 +26,9 @@ compile(ModName, Val) ->
         {ok, Bin} ->
             code:soft_purge(ModName),
             F = atom_to_list(ModName) ++ ".erl",
-            {module, ModName} = code:load_binary(ModName, F, Bin);
+            {module, ModName} = code:load_binary(ModName, F, Bin),
 
+            ok;
         Error ->
             io:format(user, "~p~n", [Error]),
             Error
