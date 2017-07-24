@@ -4,10 +4,16 @@
 
 -type compile_ret() :: ok | {error, any()}.
 
+-type compiler() :: haki_syntax_compiler |
+                    haki_beam_compiler |
+                    haki_asm_compiler.
+
 -export_type([
     cache_module_name/0,
     cache_key/0,
     cache_value/0,
 
-    compile_ret/0
+    compile_ret/0,
+
+    compiler/0
 ]).

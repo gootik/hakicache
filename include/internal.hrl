@@ -43,7 +43,5 @@
 
     no_line_info,
     report_errors,
-    verbose,
-    compressed,
     binary
 ]).

@@ -20,6 +20,7 @@
     compile/2
 ]).
 
+
 -spec compile(cache_module_name(), cache_value()) -> compile_ret().
 compile(ModName, Val) ->
     ModNameB = atom_to_binary(ModName, utf8),
@@ -27,7 +28,7 @@ compile(ModName, Val) ->
     FileName = atom_to_list(ModName) ++ ".S",
     {ok, File} = file:open(FileName, write),
 
-    ValB = io_lib:format(<<"~999999999p~n">>, [Val]),
+    ValB = io_lib:format(<<"~p~n">>, [Val]),
     Asm = asm_template(ModNameB, ValB),
     ?timed(file, file:write(File, Asm)),
     ok = file:close(File),
@@ -40,8 +41,9 @@ compile(ModName, Val) ->
             F = atom_to_list(ModName) ++ ".erl",
             {module, Module} = code:load_binary(Module, F, Bin),
 
-            file:delete(FileName);
+            file:delete(FileName),
 
+            ok;
         Error ->
             io:format(user, "~p~n", [Error]),
             Error
