@@ -58,7 +58,6 @@ forms(ModName, Val) ->
                [erl_syntax:revert(X) || X <- Module]
            end).
 
-
 %% For large lists, parallelize them
 get_function(Val) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->
     Vals = rpc:pmap({erl_syntax, abstract}, [], Val),

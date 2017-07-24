@@ -18,8 +18,7 @@
 -define(timed(N, C), C).
 -endif.
 
--define(LARGE_LIST_LENGTH, 0).
--define(LARGE_MAP_SIZE, 1).
+-define(LARGE_LIST_LENGTH, 1000).
 
 -define(GET_FUNC, get).
 -define(INFO_FUNC, info).
@@ -44,6 +43,5 @@
 
     no_line_info,
     report_errors,
-    time,
     binary
 ]).

@@ -36,6 +36,7 @@ compile(ModName, Val) ->
             Error
     end.
 
+-spec beam_asm(cache_module_name(), cache_value()) -> {ok, binary()} | error.
 beam_asm(ModName, Val) ->
     Code = {ModName,
             [{get, 0}, {module_info, 0}, {module_info, 1}],

@@ -13,14 +13,8 @@
 
 -export([
     cache/2,
-    cache_bucket/2,
-    get/1,
-    get/2,
-
-    snapshot/1,
-
-    t/0,
-    ts/0
+    cache/3,
+    get/1
 ]).
 
 -spec cache(cache_key(), cache_value()) -> ok | {error, any()}.
@@ -29,9 +23,10 @@ cache(Key, Val) ->
            haki_compiler:compile(Key, Val)
     ).
 
-cache_bucket(Bucket, Map) ->
+-spec cache(cache_key(), cache_value(), compiler()) -> ok | {error, any()}.
+cache(Key, Val, Compiler) ->
     ?timed(cache,
-       haki_compiler:compile_bucket(Bucket, Map)
+           haki_compiler:compile(Key, Val, Compiler)
     ).
 
 -spec get(cache_key()) -> cache_value().
@@ -42,40 +37,3 @@ get(Key) ->
                Mod:get()
            end
     ).
-
-get(Bucket, Key) ->
-    ?timed(get,
-           begin
-               Mod = haki_compiler:mod_name(Bucket, Key),
-               Mod:get(Key)
-           end
-    ).
-
-snapshot(Key) ->
-    Mod = haki_compiler:mod_name(Key),
-    Mod.
-
-t() ->
-    ?timed(test,
-           begin
-               {ok, TabId} = ets:file2tab("./sample.ets"),
-               [{_, Data}] = ets:lookup(TabId, <<"phone">>),
-
-               haki:cache(test_key, Data),
-               Data = haki:get(test_key),
-
-               ok
-           end).
-
-ts() ->
-    ?timed(test,
-           begin
-               {ok, TabId} = ets:file2tab("./sample.ets"),
-               [{_, Data}] = ets:lookup(TabId, <<"phone">>),
-
-               CacheData = lists:sublist(Data, 2),
-               haki:cache(random_key, CacheData),
-               CacheData = haki:get(random_key),
-
-               ok
-           end).
