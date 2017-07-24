@@ -74,3 +74,14 @@ avg. key length: 27000
 haki_asm_compiler: 49,646ms
 haki_beam_compiler: 1,389ms
 ```
+
+### Note
+If you are loading a massive amount of data, you may run into this error:
+```
+literal_alloc: Cannot allocate ____ bytes of memory (of type "literal").
+```
+
+This is because Erlang VM by default only allows for 1GB of literal data loaded in the VM (http://erlang.org/doc/man/erts_alloc.html). 
+To go around this, you can add `+MIscs <size in MB>` to your VM configs at runtime and everything should work (keep in mind this is only available on 64-bit machines). 
+
+I suggest you using 2x of the amount of data you are expecting to load into the VM, this way your VM will not crash if you are reloading or rebuilding the cache.
