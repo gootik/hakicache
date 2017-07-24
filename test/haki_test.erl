@@ -45,20 +45,3 @@ record_huge_unicode_test() ->
     Data = [#complex_record_test{binary = <<"∆">>} || _ <- lists:seq(1, 20000)],
     haki:cache(test_record_large_unicode_key, Data),
     Data = haki:get(test_record_large_unicode_key).
-
-bucket_test() ->
-    Data = #{a => some_atom,
-             t => {some, tuple},
-             b => <<"some_binary">>,
-             i => 1234,
-             l => "some_list",
-             m => #{some => map}},
-
-    haki:cache_bucket(unit_test, Data),
-
-    some_atom           = haki:get(unit_test, a),
-    {some, tuple}       = haki:get(unit_test, t),
-    <<"some_binary">>   = haki:get(unit_test, b),
-    1234                = haki:get(unit_test, i),
-    "some_list"         = haki:get(unit_test, l),
-    #{some := map}      = haki:get(unit_test, m).
