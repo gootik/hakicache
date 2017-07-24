@@ -51,8 +51,9 @@ ok
 "VALUE"
 ```
 
-### Benchmark
-```erlang
+### Benchmarks
+Lots of small/medium sized keys:
+```
 file size: 1781 MB
 num keys: 4554
 avg. key length: 340
@@ -63,4 +64,13 @@ lists:foreach(
   end, maps:keys(Map)).
   
 Caching of 4554 keys took 2 minutes.
+```
+Few large keys:
+```
+file size: 177.319806098938Mb
+num keys: 3
+avg. key length: 27000
+
+haki_asm_compiler: 49,646ms
+haki_beam_compuler: 1,389ms
 ```
