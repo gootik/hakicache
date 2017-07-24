@@ -50,3 +50,17 @@ ok
 2> haki:get(some_haki_key).
 "VALUE"
 ```
+
+### Benchmark
+```erlang
+file size: 1781 MB
+num keys: 4554
+avg. key length: 340
+
+lists:foreach(
+  fun(K) ->
+     haki:cache(K, maps:get(K, Map), haki_beam_compiler)
+  end, maps:keys(Map)).
+  
+Caching of 4554 keys took 2 minutes.
+```
