@@ -53,7 +53,7 @@ ok
 
 ### Benchmarks
 Lots of small/medium sized keys:
-```
+```erlang
 file size: 1781 MB
 num keys: 4554
 avg. key length: 340
@@ -63,14 +63,14 @@ lists:foreach(
      haki:cache(K, maps:get(K, Map), haki_beam_compiler)
   end, maps:keys(Map)).
   
-Caching of 4554 keys took 2 minutes.
+Caching of 4554 keys took 1 minute and 55 seconds.
 ```
 Few large keys:
-```
+```erlang
 file size: 177.319806098938Mb
 num keys: 3
 avg. key length: 27000
 
 haki_asm_compiler: 49,646ms
-haki_beam_compuler: 1,389ms
+haki_beam_compiler: 1,389ms
 ```
