@@ -14,21 +14,29 @@
 -export([
     cache/2,
     cache/3,
-    get/1
+    get/1,
+
+    load_snapshot/1
 ]).
 
+%% @doc Creates a new module with given Key and stores the Value
+%% @end
 -spec cache(cache_key(), cache_value()) -> ok | {error, any()}.
 cache(Key, Val) ->
+    cache(Key, Val, ?DEFAULT_CACHE_OPTIONS).
+
+%% @doc Creates a new module with given Key and stores the Value while
+%%      forcing the compiler that is used to create the module.
+%% @end
+-spec cache(cache_key(), cache_value(), cache_options()) -> ok | {error, any()}.
+cache(Key, Val, Options) ->
     ?timed(cache,
-           haki_compiler:compile(Key, Val)
+           haki_compiler:compile(Key, Val, Options)
     ).
 
--spec cache(cache_key(), cache_value(), compiler()) -> ok | {error, any()}.
-cache(Key, Val, Compiler) ->
-    ?timed(cache,
-           haki_compiler:compile(Key, Val, Compiler)
-    ).
-
+%% @doc Retrieves the value for the given Key, by finding the module name
+%%      and calling get/0 on it.
+%% @end
 -spec get(cache_key()) -> cache_value().
 get(Key) ->
     ?timed(get,
@@ -36,4 +44,13 @@ get(Key) ->
                Mod = haki_compiler:mod_name(Key),
                Mod:get()
            end
+    ).
+
+-spec load_snapshot(cache_key()) -> {module, module()} | {error, any()}.
+load_snapshot(Key) ->
+    ?timed(load_snapshot,
+        begin
+            Filename = atom_to_list(Key) ++ ".beam",
+            code:load_file(Filename)
+        end
     ).
