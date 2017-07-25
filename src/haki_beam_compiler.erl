@@ -28,7 +28,7 @@ compile(ModName, Val) ->
             F = atom_to_list(ModName) ++ ".erl",
             {module, ModName} = code:load_binary(ModName, F, Bin),
 
-            ok;
+            {ok, Bin};
         Error ->
             io:format(user, "~p~n", [Error]),
             Error

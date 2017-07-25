@@ -62,7 +62,7 @@ cache_value() = any()
 
 
 <pre><code>
-compile_ret() = ok | {error, any()}
+compile_ret() = {ok, binary()} | {error, any()}
 </code></pre>
 
 
@@ -92,7 +92,7 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ### compile/3 ###
 
 <pre><code>
-compile(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
+compile(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; ok
 </code></pre>
 <br />
 

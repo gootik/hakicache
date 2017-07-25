@@ -66,7 +66,7 @@ cache_value() = any()
 
 
 <pre><code>
-compile_ret() = ok | {error, any()}
+compile_ret() = {ok, binary()} | {error, any()}
 </code></pre>
 
 
@@ -121,7 +121,7 @@ forcing the compiler that is used to create the module.
 ### get/1 ###
 
 <pre><code>
-get(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; <a href="#type-cache_value">cache_value()</a>
+get(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; <a href="#type-cache_value">cache_value()</a> | bad_key
 </code></pre>
 <br />
 

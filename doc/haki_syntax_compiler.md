@@ -65,7 +65,7 @@ cache_value() = any()
 
 
 <pre><code>
-compile_ret() = ok | {error, any()}
+compile_ret() = {ok, binary()} | {error, any()}
 </code></pre>
 
 

@@ -31,26 +31,34 @@ cache(Key, Val) ->
 -spec cache(cache_key(), cache_value(), cache_options()) -> ok | {error, any()}.
 cache(Key, Val, Options) ->
     ?timed(cache,
-           haki_compiler:compile(Key, Val, Options)
+           begin
+               FilledOptions = maps:merge(?DEFAULT_CACHE_OPTIONS, Options),
+               haki_compiler:compile(Key, Val, FilledOptions)
+           end
     ).
 
 %% @doc Retrieves the value for the given Key, by finding the module name
 %%      and calling get/0 on it.
 %% @end
--spec get(cache_key()) -> cache_value().
+-spec get(cache_key()) -> cache_value() | bad_key.
 get(Key) ->
     ?timed(get,
            begin
                Mod = haki_compiler:mod_name(Key),
-               Mod:get()
+               case module_loaded(Mod) of
+                   false ->
+                       bad_key;
+                   _ ->
+                       Mod:get()
+               end
            end
     ).
 
 -spec load_snapshot(cache_key()) -> {module, module()} | {error, any()}.
 load_snapshot(Key) ->
     ?timed(load_snapshot,
-        begin
-            Filename = atom_to_list(Key) ++ ".beam",
-            code:load_file(Filename)
-        end
+           begin
+               ModName = haki_compiler:mod_name(Key),
+               code:load_file(ModName)
+           end
     ).

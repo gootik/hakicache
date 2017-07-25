@@ -12,7 +12,7 @@
 -type cache_key() :: atom().
 -type cache_value() :: any().
 
--type compile_ret() :: ok | {error, any()}.
+-type compile_ret() :: {ok, binary()} | {error, any()}.
 
 -type compiler() :: haki_syntax_compiler |
                     haki_beam_compiler |
