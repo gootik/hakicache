@@ -1,4 +1,4 @@
 %% encoding: UTF-8
 {application,haki}.
-{modules,[haki,haki_app,haki_asm_compiler,haki_compiler,haki_sup,
+{modules,[haki,haki_asm_compiler,haki_beam_compiler,haki_compiler,
           haki_syntax_compiler]}.

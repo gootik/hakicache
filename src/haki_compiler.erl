@@ -28,6 +28,7 @@ compile(Key, Val) ->
     ModName = mod_name(Key),
     haki_syntax_compiler:compile(ModName, Val).
 
+-spec compile(cache_key(), cache_value(), compiler()) -> compile_ret().
 compile(Key, Val, Compiler) ->
     ModName = mod_name(Key),
     Compiler:compile(ModName, Val).

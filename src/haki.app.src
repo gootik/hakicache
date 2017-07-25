@@ -2,15 +2,11 @@
  [{description, "Haki Cache"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { haki_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
+  {applications, [kernel, stdlib]},
   {env,[]},
-  {modules, []},
+  {modules, [haki, haki_asm_compiler, haki_beam_compiler, haki_syntax_compiler, haki_compiler]},
 
-  {maintainers, []},
-  {licenses, []},
+  {maintainers, ["Sasan Hezarkhani"]},
+  {licenses, ["MIT"]},
   {links, []}
  ]}.

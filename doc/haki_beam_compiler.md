@@ -1,24 +1,20 @@
 
 
-# Module haki_asm_compiler #
+# Module haki_beam_compiler #
 * [Description](#description)
 * [Data Types](#types)
 * [Function Index](#index)
 * [Function Details](#functions)
 
-Using the syntax compiler has an over head of creating an AST
-and having the compiler to lint/expand records/optimize.
+NOTE: Super hacky (but fast) at the moment.
 
 <a name="description"></a>
 
 ## Description ##
+If you want to use
+this compiler you have to force it by forcing it. For example:
+haki:cache(K, V, haki_beam_compiler).
 
-Moreover, building an AST and compiling has a huge overhead on
-memory, if the data is large.
-
-However for the most usecases of this library you are caching
-a literal value, so if we hack the ASM file on the fly it should
-produce a decent module that can be then compiled and loaded.
 <a name="types"></a>
 
 ## Data Types ##

@@ -55,12 +55,22 @@ cache_value() = any()
 compile_ret() = ok | {error, any()}
 </code></pre>
 
+
+
+
+### <a name="type-compiler">compiler()</a> ###
+
+
+<pre><code>
+compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
+</code></pre>
+
 <a name="index"></a>
 
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-2">compile/2</a></td><td></td></tr><tr><td valign="top"><a href="#mod_name-1">mod_name/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-2">compile/2</a></td><td></td></tr><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr><tr><td valign="top"><a href="#mod_name-1">mod_name/1</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -76,9 +86,21 @@ compile(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cach
 </code></pre>
 <br />
 
+<a name="compile-3"></a>
+
+### compile/3 ###
+
+<pre><code>
+compile(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Compiler::<a href="#type-compiler">compiler()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
+</code></pre>
+<br />
+
 <a name="mod_name-1"></a>
 
 ### mod_name/1 ###
 
-`mod_name(Key) -> any()`
+<pre><code>
+mod_name(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; atom()
+</code></pre>
+<br />
 

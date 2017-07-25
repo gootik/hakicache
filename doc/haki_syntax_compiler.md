@@ -58,6 +58,16 @@ cache_value() = any()
 compile_ret() = ok | {error, any()}
 </code></pre>
 
+
+
+
+### <a name="type-compiler">compiler()</a> ###
+
+
+<pre><code>
+compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
+</code></pre>
+
 <a name="index"></a>
 
 ## Function Index ##
