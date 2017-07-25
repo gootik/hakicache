@@ -46,6 +46,16 @@ cache_module_name() = atom()
 
 
 
+### <a name="type-cache_options">cache_options()</a> ###
+
+
+<pre><code>
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_value">cache_value()</a> ###
 
 
@@ -60,7 +70,17 @@ cache_value() = any()
 
 
 <pre><code>
-compile_ret() = ok | {error, any()}
+compile_ret() = {ok, binary()} | {error, any()}
+</code></pre>
+
+
+
+
+### <a name="type-compiler">compiler()</a> ###
+
+
+<pre><code>
+compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 </code></pre>
 
 <a name="index"></a>

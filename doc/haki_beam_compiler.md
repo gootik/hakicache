@@ -1,19 +1,20 @@
 
 
-# Module haki_syntax_compiler #
+# Module haki_beam_compiler #
 * [Description](#description)
 * [Data Types](#types)
 * [Function Index](#index)
 * [Function Details](#functions)
 
-Using the simple erl_syntax module to build a AST before
-compiling the module.
+NOTE: Super hacky (but fast) at the moment.
 
 <a name="description"></a>
 
 ## Description ##
-This is way more stable than the ASM
-compiler and thus should be used for most cases.
+If you want to use
+this compiler you have to force it by forcing it. For example:
+haki:cache(K, V, haki_beam_compiler).
+
 <a name="types"></a>
 
 ## Data Types ##

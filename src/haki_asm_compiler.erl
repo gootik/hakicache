@@ -43,7 +43,7 @@ compile(ModName, Val) ->
 
             file:delete(FileName),
 
-            ok;
+            {ok, Bin};
         Error ->
             io:format(user, "~p~n", [Error]),
             Error

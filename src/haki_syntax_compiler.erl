@@ -26,7 +26,7 @@ compile(ModName, Val) ->
             Filename = atom_to_list(ModName) ++ ".erl",
             {module, Module} = code:load_binary(Module, Filename, Bin),
 
-            ok;
+            {ok, Bin};
         Error ->
             Error
     end.

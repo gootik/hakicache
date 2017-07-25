@@ -17,6 +17,36 @@ simple_test() ->
     haki:cache(test_key, Data),
     Data = haki:get(test_key).
 
+simple_bad_key_test() ->
+    bad_key = haki:get(blah).
+
+snapshot_test() ->
+    Data = "SNAPSHOT",
+    ok = haki:cache(test_snapshot, Data, #{save_snapshot => true}),
+
+    FileName = atom_to_list(haki_compiler:mod_name(test_snapshot)) ++ ".beam",
+    ?assert(filelib:file_size(FileName) > 0),
+
+    file:delete(FileName).
+
+snapshot_load_test() ->
+    Data = "SNAPSHOT",
+    ok = haki:cache(test_snapshot, Data, #{save_snapshot => true}),
+    Data = haki:get(test_snapshot),
+
+    ModName = haki_compiler:mod_name(test_snapshot),
+    FileName = atom_to_list(ModName) ++ ".beam",
+    ?assert(filelib:file_size(FileName) > 0),
+
+    code:soft_purge(ModName),
+    code:delete(ModName),
+    bad_key = haki:get(test_snapshot),
+
+    haki:load_snapshot(test_snapshot),
+    Data = haki:get(test_snapshot),
+
+    file:delete(FileName).
+
 rewrite_test() ->
     Data = "MY_DATA",
     haki:cache(test_key, Data),
@@ -48,17 +78,17 @@ record_huge_unicode_test() ->
 
 record_syntax_test() ->
     Data = #complex_record_test{},
-    haki:cache(test_record_syntax_key, Data, haki_syntax_compiler),
+    haki:cache(test_record_syntax_key, Data, #{compiler => haki_syntax_compiler}),
     Data = haki:get(test_record_syntax_key).
 
 record_asm_test() ->
     Data = #complex_record_test{},
-    haki:cache(test_record_asm_key, Data, haki_asm_compiler),
+    haki:cache(test_record_asm_key, Data, #{compiler => haki_asm_compiler}),
     Data = haki:get(test_record_asm_key).
 
 -ifdef('HAS_BEAM_ASM').
 record_beam_test() ->
     Data = #complex_record_test{},
-    haki:cache(test_record_beam_key, Data, haki_beam_compiler),
+    haki:cache(test_record_beam_key, Data, #{compiler => haki_beam_compiler}),
     Data = haki:get(test_record_beam_key).
 -endif.

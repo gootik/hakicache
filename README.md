@@ -75,7 +75,7 @@ haki_asm_compiler: 49,646ms
 haki_beam_compiler: 1,389ms
 ```
 
-### Note
+### Troubleshooting
 If you are loading a massive amount of data, you may run into this error:
 ```
 literal_alloc: Cannot allocate ____ bytes of memory (of type "literal").
