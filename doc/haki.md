@@ -42,6 +42,16 @@ cache_module_name() = atom()
 
 
 
+### <a name="type-cache_options">cache_options()</a> ###
+
+
+<pre><code>
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_value">cache_value()</a> ###
 
 
@@ -74,7 +84,9 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cache-2">cache/2</a></td><td></td></tr><tr><td valign="top"><a href="#cache-3">cache/3</a></td><td></td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cache-2">cache/2</a></td><td>Creates a new module with given Key and stores the Value.</td></tr><tr><td valign="top"><a href="#cache-3">cache/3</a></td><td>Creates a new module with given Key and stores the Value while
+forcing the compiler that is used to create the module.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>Retrieves the value for the given Key, by finding the module name
+and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -90,14 +102,19 @@ cache(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_
 </code></pre>
 <br />
 
+Creates a new module with given Key and stores the Value
+
 <a name="cache-3"></a>
 
 ### cache/3 ###
 
 <pre><code>
-cache(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Compiler::<a href="#type-compiler">compiler()</a>) -&gt; ok | {error, any()}
+cache(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; ok | {error, any()}
 </code></pre>
 <br />
+
+Creates a new module with given Key and stores the Value while
+forcing the compiler that is used to create the module.
 
 <a name="get-1"></a>
 
@@ -105,6 +122,18 @@ cache(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_
 
 <pre><code>
 get(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; <a href="#type-cache_value">cache_value()</a>
+</code></pre>
+<br />
+
+Retrieves the value for the given Key, by finding the module name
+and calling get/0 on it.
+
+<a name="load_snapshot-1"></a>
+
+### load_snapshot/1 ###
+
+<pre><code>
+load_snapshot(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; {module, module()} | {error, any()}
 </code></pre>
 <br />
 

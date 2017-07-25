@@ -42,6 +42,16 @@ cache_module_name() = atom()
 
 
 
+### <a name="type-cache_options">cache_options()</a> ###
+
+
+<pre><code>
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_value">cache_value()</a> ###
 
 
