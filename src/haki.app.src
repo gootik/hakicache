@@ -1,6 +1,6 @@
 {application, haki,
- [{description, "Haki Cache"},
-  {vsn, "0.1.0"},
+ [{description, "Haki Cache: Use the Erlang constant pool to compile your shared data into modules."},
+  {vsn, "0.1.1"},
   {registered, []},
   {applications, [kernel, stdlib]},
   {env,[]},
@@ -8,5 +8,5 @@
 
   {maintainers, ["Sasan Hezarkhani"]},
   {licenses, ["MIT"]},
-  {links, []}
+  {links, [{"Github", "https://github.com/gootik/hakicache"}]}
  ]}.
