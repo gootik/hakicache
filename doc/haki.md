@@ -11,10 +11,14 @@ A static cache storage for Erlang.
 <a name="description"></a>
 
 ## Description ##
+
 Currently consists of two compilers:
 ASM - Used for large lists as value. Read the module docs
 for more info.
+
 Syntax - Used for all other cases.
+
+Beam - This is experimental and only works for OTP20+
 <a name="types"></a>
 
 ## Data Types ##
@@ -86,7 +90,7 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cache-2">cache/2</a></td><td>Creates a new module with given Key and stores the Value.</td></tr><tr><td valign="top"><a href="#cache-3">cache/3</a></td><td>Creates a new module with given Key and stores the Value while
 forcing the compiler that is used to create the module.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>Retrieves the value for the given Key, by finding the module name
-and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td></td></tr></table>
+and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td>Loads a cached key snapshot from the binary file.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -136,4 +140,6 @@ and calling get/0 on it.
 load_snapshot(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; {module, module()} | {error, any()}
 </code></pre>
 <br />
+
+Loads a cached key snapshot from the binary file.
 

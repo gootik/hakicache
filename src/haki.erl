@@ -3,7 +3,10 @@
 %%%      Currently consists of two compilers:
 %%%         ASM - Used for large lists as value. Read the module docs
 %%%               for more info.
+%%%
 %%%         Syntax - Used for all other cases.
+%%%
+%%%         Beam - This is experimental and only works for OTP20+
 %%% @end
 %%%-------------------------------------------------------------------
 -module(haki).
@@ -54,6 +57,8 @@ get(Key) ->
            end
     ).
 
+%% @doc Loads a cached key snapshot from the binary file.
+%% @end
 -spec load_snapshot(cache_key()) -> {module, module()} | {error, any()}.
 load_snapshot(Key) ->
     ?timed(load_snapshot,
