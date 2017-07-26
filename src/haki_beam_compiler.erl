@@ -30,7 +30,8 @@ compile(ModName, Val) ->
 
             {ok, Bin};
         Error ->
-            io:format(user, "~p~n", [Error]),
+            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+
             Error
     end.
 

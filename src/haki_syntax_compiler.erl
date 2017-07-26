@@ -28,6 +28,8 @@ compile(ModName, Val) ->
 
             {ok, Bin};
         Error ->
+            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+
             Error
     end.
 
