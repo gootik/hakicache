@@ -1,12 +1,11 @@
-{application, haki,
- [{description, "Haki Cache: Use the Erlang constant pool to compile your shared data into modules."},
-  {vsn, "0.1.1"},
-  {registered, []},
-  {applications, [kernel, stdlib]},
-  {env,[]},
-  {modules, [haki, haki_asm_compiler, haki_beam_compiler, haki_syntax_compiler, haki_compiler]},
-
-  {maintainers, ["Sasan Hezarkhani"]},
-  {licenses, ["MIT"]},
-  {links, [{"Github", "https://github.com/gootik/hakicache"}]}
- ]}.
+{application,haki,
+             [{description,"Haki Cache: Use the Erlang constant pool to compile your shared data into modules."},
+              {vsn,"0.2.0"},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {env,[]},
+              {modules,[haki,haki_asm_compiler,haki_beam_compiler,
+                        haki_syntax_compiler,haki_compiler]},
+              {maintainers,["Sasan Hezarkhani"]},
+              {licenses,["MIT"]},
+              {links,[{"Github","https://github.com/gootik/hakicache"}]}]}.
