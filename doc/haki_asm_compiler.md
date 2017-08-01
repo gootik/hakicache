@@ -26,6 +26,26 @@ produce a decent module that can be then compiled and loaded.
 
 
 
+### <a name="type-cache_bucket_name">cache_bucket_name()</a> ###
+
+
+<pre><code>
+cache_bucket_name() = atom()
+</code></pre>
+
+
+
+
+### <a name="type-cache_bucket_value">cache_bucket_value()</a> ###
+
+
+<pre><code>
+cache_bucket_value() = #{<a href="#type-cache_key">cache_key()</a> =&gt; <a href="#type-cache_value">cache_value()</a>}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_key">cache_key()</a> ###
 
 

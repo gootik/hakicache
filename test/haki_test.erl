@@ -92,3 +92,60 @@ record_beam_test() ->
     haki:cache(test_record_beam_key, Data, #{compiler => haki_beam_compiler}),
     Data = haki:get(test_record_beam_key).
 -endif.
+
+bucket_syntax_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    haki:cache_bucket(test_bucket_syntax, Data, #{compiler => haki_syntax_compiler}),
+
+    ok = haki:get(test_bucket_syntax, a),
+    not_ok = haki:get(test_bucket_syntax, b),
+    #complex_record_test{} = haki:get(test_bucket_syntax, c).
+
+-ifdef('HAS_BEAM_ASM').
+bucket_beam_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    haki:cache_bucket(test_bucket_beam, Data, #{compiler => haki_beam_compiler}),
+
+    ok = haki:get(test_bucket_beam, a),
+    not_ok = haki:get(test_bucket_beam, b),
+    #complex_record_test{} = haki:get(test_bucket_beam, c).
+-endif.
+
+snapshot_bucket_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    ok = haki:cache_bucket(test_snapshot_bucket, Data, #{save_snapshot => true}),
+
+    ok = haki:get(test_snapshot_bucket, a),
+    not_ok = haki:get(test_snapshot_bucket, b),
+    #complex_record_test{} = haki:get(test_snapshot_bucket, c),
+
+    ModName = haki_compiler:mod_name(test_snapshot_bucket),
+    FileName = atom_to_list(ModName) ++ ".beam",
+    ?assert(filelib:file_size(FileName) > 0),
+
+    code:soft_purge(ModName),
+    code:delete(ModName),
+    bad_bucket = haki:get(test_snapshot_bucket, a),
+
+    haki:load_snapshot(test_snapshot_bucket),
+
+    ok = haki:get(test_snapshot_bucket, a),
+    not_ok = haki:get(test_snapshot_bucket, b),
+    #complex_record_test{} = haki:get(test_snapshot_bucket, c),
+
+    file:delete(FileName).

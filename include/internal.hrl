@@ -43,5 +43,6 @@
 
     no_line_info,
     report_errors,
+    report_warnings,
     binary
 ]).

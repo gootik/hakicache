@@ -12,7 +12,8 @@
 -include("types.hrl").
 
 -export([
-    compile/2
+    compile/2,
+    compile_bucket/2
 ]).
 
 -spec compile(cache_module_name(), cache_value()) -> compile_ret().
@@ -28,7 +29,25 @@ compile(ModName, Val) ->
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_syntax_compiler] - Could not build module: ~p", [Error]),
+
+            Error
+    end.
+
+-spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
+compile_bucket(ModName, Map) ->
+    Forms = forms_bucket(ModName, Map),
+    Compile = ?timed(compile, compile:forms(Forms, ?COMPILER_OPTS)),
+
+    case Compile of
+        {ok, Module, Bin} ->
+            code:soft_purge(Module),
+            Filename = atom_to_list(ModName) ++ ".erl",
+            {module, Module} = code:load_binary(Module, Filename, Bin),
+
+            {ok, Bin};
+        Error ->
+            error_logger:error_msg("[hakicache_syntax_compiler] - Could not build bucket module: ~p", [Error]),
 
             Error
     end.
@@ -44,16 +63,35 @@ forms(ModName, Val) ->
                    erl_syntax:atom(?GET_FUNC),
                    erl_syntax:integer(0)),
 
-               CompileInfoExport = erl_syntax:arity_qualifier(
-                   erl_syntax:atom(?INFO_FUNC),
-                   erl_syntax:integer(0)),
+               ExportsAttr = erl_syntax:attribute(
+                   erl_syntax:atom(export), [
+                       erl_syntax:list(
+                           [GetExport])]),
+
+               Functions = [get_function(Val)],
+               Attributes = [ModuleAttr, ExportsAttr],
+               Module = Attributes ++ Functions,
+
+               [erl_syntax:revert(X) || X <- Module]
+           end).
+
+forms_bucket(ModName, Map) ->
+    ?timed(forms,
+           begin
+               ModuleAttr = erl_syntax:attribute(
+                   erl_syntax:atom(module),
+                   [erl_syntax:atom(ModName)]),
+
+               GetExport = erl_syntax:arity_qualifier(
+                   erl_syntax:atom(?GET_FUNC),
+                   erl_syntax:integer(1)),
 
                ExportsAttr = erl_syntax:attribute(
                    erl_syntax:atom(export), [
                        erl_syntax:list(
-                           [GetExport, CompileInfoExport])]),
+                           [GetExport])]),
 
-               Functions = [get_function(Val), compile_info_function()],
+               Functions = [get_function_bucket(Map)],
                Attributes = [ModuleAttr, ExportsAttr],
                Module = Attributes ++ Functions,
 
@@ -72,12 +110,20 @@ get_function(Val) ->
         erl_syntax:atom(?GET_FUNC),
         [erl_syntax:clause([], [], [erl_syntax:abstract(Val)])]).
 
-compile_info_function() ->
-    CompileDate = now_ms(),
-    erl_syntax:function(
-        erl_syntax:atom(?INFO_FUNC),
-        [erl_syntax:clause([], [], [erl_syntax:integer(CompileDate)])]).
+get_function_bucket(Map) ->
+    MapClauses = maps:fold(
+        fun(Key, Val, Clauses) ->
+            Clauses ++ [get_function_clause(Key, Val)]
+        end, [], Map),
 
-now_ms() ->
-    {MegaSecs, Secs, MicroSecs} = os:timestamp(),
-    (MegaSecs * 1000000 + Secs) * 1000 + round(MicroSecs / 1000).
+    Clauses = MapClauses ++ [unknown_key_clause()],
+
+    erl_syntax:function(
+        erl_syntax:atom(?GET_FUNC),
+        Clauses).
+
+get_function_clause(Key, Val) ->
+    erl_syntax:clause([erl_syntax:atom(Key)], [], [erl_syntax:abstract(Val)]).
+
+unknown_key_clause() ->
+    erl_syntax:clause([erl_syntax:variable("_")], [], [erl_syntax:atom(bad_key)]).
