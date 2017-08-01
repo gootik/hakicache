@@ -112,7 +112,7 @@ load_snapshot(Key) ->
 
 %% @doc Loads a cached key snapshot from the binary file given a path.
 %% @end
--spec load_snapshot(cache_key()) -> {module, module()} | {error, any()}.
+-spec load_snapshot(string(), cache_key()) -> {module, module()} | {error, any()}.
 load_snapshot(Path, Key) ->
     ?timed(load_snapshot,
            begin
