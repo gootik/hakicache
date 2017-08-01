@@ -17,7 +17,12 @@
 -export([
     cache/2,
     cache/3,
+
+    cache_bucket/2,
+    cache_bucket/3,
+
     get/1,
+    get/2,
 
     load_snapshot/1
 ]).
@@ -40,6 +45,18 @@ cache(Key, Val, Options) ->
            end
     ).
 
+
+cache_bucket(Bucket, Map) ->
+    cache_bucket(Bucket, Map, ?DEFAULT_CACHE_OPTIONS).
+
+cache_bucket(Bucket, Map, Options) ->
+    ?timed(cache,
+        begin
+            FilledOptions = maps:merge(?DEFAULT_CACHE_OPTIONS, Options),
+            haki_compiler:compile_bucket(Bucket, Map, FilledOptions)
+        end
+    ).
+
 %% @doc Retrieves the value for the given Key, by finding the module name
 %%      and calling get/0 on it.
 %% @end
@@ -55,6 +72,19 @@ get(Key) ->
                        Mod:get()
                end
            end
+    ).
+
+get(Bucket, Key) ->
+    ?timed(get,
+        begin
+            Mod = haki_compiler:mod_name(Bucket),
+            case module_loaded(Mod) of
+                false ->
+                    bad_bucket;
+                _ ->
+                    Mod:get(Key)
+            end
+        end
     ).
 
 %% @doc Loads a cached key snapshot from the binary file.

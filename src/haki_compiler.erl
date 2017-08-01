@@ -10,6 +10,7 @@
 
 -export([
     compile/3,
+    compile_bucket/3,
 
     mod_name/1
 ]).
@@ -36,6 +37,29 @@ compile(Key, Val, Options) ->
         _ ->
             ok
     end.
+
+compile_bucket(Bucket, Map, Options) ->
+    {ok, Binary} = case Options of
+       #{compiler := haki_default_compiler} ->
+           ModName = mod_name(Bucket),
+           haki_syntax_compiler:compile_bucket(ModName, Map);
+
+       #{compiler := Compiler} ->
+           ModName = mod_name(Bucket),
+           Compiler:compile_bucket(ModName, Map)
+    end,
+
+    case Options of
+        #{save_snapshot := true} ->
+            FileName = atom_to_list(mod_name(Bucket)) ++ ".beam",
+            file:write_file(FileName, Binary),
+
+            ok;
+        _ ->
+            ok
+    end.
+
+
 
 -spec compile(cache_key(), cache_value()) -> compile_ret().
 compile(Key, Val) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->
