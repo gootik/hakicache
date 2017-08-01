@@ -24,7 +24,8 @@
     get/1,
     get/2,
 
-    load_snapshot/1
+    load_snapshot/1,
+    load_snapshot/2
 ]).
 
 %% @doc Creates a new module with given Key and stores the Value
@@ -104,6 +105,18 @@ get(Bucket, Key) ->
 load_snapshot(Key) ->
     ?timed(load_snapshot,
            begin
+               ModName = haki_compiler:mod_name(Key),
+               code:load_file(ModName)
+           end
+    ).
+
+%% @doc Loads a cached key snapshot from the binary file given a path.
+%% @end
+-spec load_snapshot(string(), cache_key()) -> {module, module()} | {error, any()}.
+load_snapshot(Path, Key) ->
+    ?timed(load_snapshot,
+           begin
+               code:add_pathz(Path),
                ModName = haki_compiler:mod_name(Key),
                code:load_file(ModName)
            end

@@ -113,7 +113,7 @@ forcing the compiler that is used to create the module.</td></tr><tr><td valign=
 given map will be separately retrievable by get/2.</td></tr><tr><td valign="top"><a href="#cache_bucket-3">cache_bucket/3</a></td><td>Creates a new module named after the bucket, each key/value pair of the
 given map will be separately retrievable by get/2.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>Retrieves the value for the given Key, by finding the module name
 and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#get-2">get/2</a></td><td>Retrieves the value for the given Key in the given bucket, by finding the module
-name and calling get/1 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td>Loads a cached key snapshot from the binary file.</td></tr></table>
+name and calling get/1 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td>Loads a cached key snapshot from the binary file.</td></tr><tr><td valign="top"><a href="#load_snapshot-2">load_snapshot/2</a></td><td>Loads a cached key snapshot from the binary file given a path.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -201,4 +201,15 @@ load_snapshot(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; {module, mod
 <br />
 
 Loads a cached key snapshot from the binary file.
+
+<a name="load_snapshot-2"></a>
+
+### load_snapshot/2 ###
+
+<pre><code>
+load_snapshot(Path::string(), Key::<a href="#type-cache_key">cache_key()</a>) -&gt; {module, module()} | {error, any()}
+</code></pre>
+<br />
+
+Loads a cached key snapshot from the binary file given a path.
 
