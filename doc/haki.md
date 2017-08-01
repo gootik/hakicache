@@ -26,6 +26,26 @@ Beam - This is experimental and only works for OTP20+
 
 
 
+### <a name="type-cache_bucket_name">cache_bucket_name()</a> ###
+
+
+<pre><code>
+cache_bucket_name() = atom()
+</code></pre>
+
+
+
+
+### <a name="type-cache_bucket_value">cache_bucket_value()</a> ###
+
+
+<pre><code>
+cache_bucket_value() = #{<a href="#type-cache_key">cache_key()</a> =&gt; <a href="#type-cache_value">cache_value()</a>}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_key">cache_key()</a> ###
 
 
@@ -89,8 +109,11 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#cache-2">cache/2</a></td><td>Creates a new module with given Key and stores the Value.</td></tr><tr><td valign="top"><a href="#cache-3">cache/3</a></td><td>Creates a new module with given Key and stores the Value while
-forcing the compiler that is used to create the module.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>Retrieves the value for the given Key, by finding the module name
-and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td>Loads a cached key snapshot from the binary file.</td></tr></table>
+forcing the compiler that is used to create the module.</td></tr><tr><td valign="top"><a href="#cache_bucket-2">cache_bucket/2</a></td><td>Creates a new module named after the bucket, each key/value pair of the
+given map will be separately retrievable by get/2.</td></tr><tr><td valign="top"><a href="#cache_bucket-3">cache_bucket/3</a></td><td>Creates a new module named after the bucket, each key/value pair of the
+given map will be separately retrievable by get/2.</td></tr><tr><td valign="top"><a href="#get-1">get/1</a></td><td>Retrieves the value for the given Key, by finding the module name
+and calling get/0 on it.</td></tr><tr><td valign="top"><a href="#get-2">get/2</a></td><td>Retrieves the value for the given Key in the given bucket, by finding the module
+name and calling get/1 on it.</td></tr><tr><td valign="top"><a href="#load_snapshot-1">load_snapshot/1</a></td><td>Loads a cached key snapshot from the binary file.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -120,6 +143,30 @@ cache(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_
 Creates a new module with given Key and stores the Value while
 forcing the compiler that is used to create the module.
 
+<a name="cache_bucket-2"></a>
+
+### cache_bucket/2 ###
+
+<pre><code>
+cache_bucket(Bucket::<a href="#type-cache_bucket_name">cache_bucket_name()</a>, Map::<a href="#type-cache_bucket_value">cache_bucket_value()</a>) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+
+Creates a new module named after the bucket, each key/value pair of the
+given map will be separately retrievable by get/2.
+
+<a name="cache_bucket-3"></a>
+
+### cache_bucket/3 ###
+
+<pre><code>
+cache_bucket(Bucket::<a href="#type-cache_bucket_name">cache_bucket_name()</a>, Map::<a href="#type-cache_bucket_value">cache_bucket_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; ok | {error, any()}
+</code></pre>
+<br />
+
+Creates a new module named after the bucket, each key/value pair of the
+given map will be separately retrievable by get/2.
+
 <a name="get-1"></a>
 
 ### get/1 ###
@@ -131,6 +178,18 @@ get(Key::<a href="#type-cache_key">cache_key()</a>) -&gt; <a href="#type-cache_v
 
 Retrieves the value for the given Key, by finding the module name
 and calling get/0 on it.
+
+<a name="get-2"></a>
+
+### get/2 ###
+
+<pre><code>
+get(Bucket::<a href="#type-cache_bucket_name">cache_bucket_name()</a>, Key::<a href="#type-cache_key">cache_key()</a>) -&gt; <a href="#type-cache_value">cache_value()</a> | bad_key | bad_bucket
+</code></pre>
+<br />
+
+Retrieves the value for the given Key in the given bucket, by finding the module
+name and calling get/1 on it.
 
 <a name="load_snapshot-1"></a>
 

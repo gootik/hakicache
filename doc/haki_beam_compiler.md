@@ -22,6 +22,26 @@ haki:cache(K, V, haki_beam_compiler).
 
 
 
+### <a name="type-cache_bucket_name">cache_bucket_name()</a> ###
+
+
+<pre><code>
+cache_bucket_name() = atom()
+</code></pre>
+
+
+
+
+### <a name="type-cache_bucket_value">cache_bucket_value()</a> ###
+
+
+<pre><code>
+cache_bucket_value() = #{<a href="#type-cache_key">cache_key()</a> =&gt; <a href="#type-cache_value">cache_value()</a>}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_key">cache_key()</a> ###
 
 
@@ -84,7 +104,7 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-2">compile/2</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-2">compile/2</a></td><td></td></tr><tr><td valign="top"><a href="#compile_bucket-2">compile_bucket/2</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -97,6 +117,15 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 
 <pre><code>
 compile(ModName::<a href="#type-cache_module_name">cache_module_name()</a>, Val::<a href="#type-cache_value">cache_value()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
+</code></pre>
+<br />
+
+<a name="compile_bucket-2"></a>
+
+### compile_bucket/2 ###
+
+<pre><code>
+compile_bucket(ModName::<a href="#type-cache_module_name">cache_module_name()</a>, Val::<a href="#type-cache_bucket_value">cache_bucket_value()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
 </code></pre>
 <br />
 

@@ -18,6 +18,26 @@ __This module defines the `haki_compiler` behaviour.__<br /> Required callback f
 
 
 
+### <a name="type-cache_bucket_name">cache_bucket_name()</a> ###
+
+
+<pre><code>
+cache_bucket_name() = atom()
+</code></pre>
+
+
+
+
+### <a name="type-cache_bucket_value">cache_bucket_value()</a> ###
+
+
+<pre><code>
+cache_bucket_value() = #{<a href="#type-cache_key">cache_key()</a> =&gt; <a href="#type-cache_value">cache_value()</a>}
+</code></pre>
+
+
+
+
 ### <a name="type-cache_key">cache_key()</a> ###
 
 
@@ -80,7 +100,7 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr><tr><td valign="top"><a href="#mod_name-1">mod_name/1</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr><tr><td valign="top"><a href="#compile_bucket-3">compile_bucket/3</a></td><td></td></tr><tr><td valign="top"><a href="#mod_name-1">mod_name/1</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -93,6 +113,15 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 
 <pre><code>
 compile(Key::<a href="#type-cache_key">cache_key()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; ok
+</code></pre>
+<br />
+
+<a name="compile_bucket-3"></a>
+
+### compile_bucket/3 ###
+
+<pre><code>
+compile_bucket(Bucket::<a href="#type-cache_bucket_name">cache_bucket_name()</a>, Map::<a href="#type-cache_bucket_value">cache_bucket_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; ok
 </code></pre>
 <br />
 
