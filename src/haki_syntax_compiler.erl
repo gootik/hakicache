@@ -34,6 +34,7 @@ compile(ModName, Val) ->
             Error
     end.
 
+-spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
 compile_bucket(ModName, Map) ->
     Forms = forms_bucket(ModName, Map),
     Compile = ?timed(compile, compile:forms(Forms, ?COMPILER_OPTS)),

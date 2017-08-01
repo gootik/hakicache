@@ -45,10 +45,17 @@ cache(Key, Val, Options) ->
            end
     ).
 
-
+%% @doc Creates a new module named after the bucket, each key/value pair of the
+%%      given map will be separately retrievable by get/2.
+%% @end
+-spec cache_bucket(cache_bucket_name(), cache_bucket_value()) -> ok | {error, any()}.
 cache_bucket(Bucket, Map) ->
     cache_bucket(Bucket, Map, ?DEFAULT_CACHE_OPTIONS).
 
+%% @doc Creates a new module named after the bucket, each key/value pair of the
+%%      given map will be separately retrievable by get/2.
+%% @end
+-spec cache_bucket(cache_bucket_name(), cache_bucket_value(), cache_options()) -> ok | {error, any()}.
 cache_bucket(Bucket, Map, Options) ->
     ?timed(cache,
         begin
@@ -74,6 +81,10 @@ get(Key) ->
            end
     ).
 
+%% @doc Retrieves the value for the given Key in the given bucket, by finding the module
+%%      name and calling get/1 on it.
+%% @end
+-spec get(cache_bucket_name(), cache_key()) -> cache_value() | bad_key | bad_bucket.
 get(Bucket, Key) ->
     ?timed(get,
         begin

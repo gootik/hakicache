@@ -38,6 +38,8 @@ compile(Key, Val, Options) ->
             ok
     end.
 
+
+-spec compile_bucket(cache_bucket_name(), cache_bucket_value(), cache_options()) -> ok.
 compile_bucket(Bucket, Map, Options) ->
     {ok, Binary} = case Options of
        #{compiler := haki_default_compiler} ->
@@ -58,8 +60,6 @@ compile_bucket(Bucket, Map, Options) ->
         _ ->
             ok
     end.
-
-
 
 -spec compile(cache_key(), cache_value()) -> compile_ret().
 compile(Key, Val) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->

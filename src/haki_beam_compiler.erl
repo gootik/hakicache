@@ -36,6 +36,7 @@ compile(ModName, Val) ->
             Error
     end.
 
+-spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
 compile_bucket(ModName, Val) ->
     Compile = beam_asm_bucket(ModName, Val),
 
@@ -87,6 +88,7 @@ beam_asm(ModName, Val) ->
 
     beam_asm:module(Code, Chunks, Source, Opts, CompilerOpts).
 
+-spec beam_asm_bucket(cache_module_name(), cache_bucket_value()) -> {ok, binary()} | error.
 beam_asm_bucket(ModName, Map) ->
     NumKeys = maps:size(Map),
 
