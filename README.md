@@ -33,6 +33,29 @@ ok
 "VALUE"
 ```
 
+You can also group a set of key/values into a single module by using the bucketing feature.
+You have to pass an atom for the bucket name and a map of `atom() => any()` for caching:
+```erlang
+Erlang/OTP 20 [erts-9.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:0] [hipe] [kernel-poll:false]
+
+Eshell V9.0  (abort with ^G)
+1> haki:cache_bucket(people, #{
+1>     mike => #{age => 10, height => 180, weight => 65},
+1>     christina => #{age => 10, height => 160, weight => 45}
+1> }).
+ok
+
+2> haki:get(people, mike).
+#{age => 10,height => 180,weight => 65}
+
+3> haki:get(people, christina).
+#{age => 10,height => 160,weight => 45}
+
+4> haki:get(people, no_name).
+bad_key
+
+```
+
 ### Super experimental features
 The `haki_beam` compiler skips all the steps that is required
 to go from a `.S` file to a binary representation of the module.

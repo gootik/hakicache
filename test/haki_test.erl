@@ -106,19 +106,6 @@ bucket_syntax_test() ->
     not_ok = haki:get(test_bucket_syntax, b),
     #complex_record_test{} = haki:get(test_bucket_syntax, c).
 
-bucket_asm_test() ->
-    Data = #{
-        a => ok,
-        b => not_ok,
-        c => #complex_record_test{}
-    },
-
-    haki:cache_bucket(test_bucket_asm, Data, #{compiler => haki_asm_compiler}),
-
-    ok = haki:get(test_bucket_asm, a),
-    not_ok = haki:get(test_bucket_asm, b),
-    #complex_record_test{} = haki:get(test_bucket_asm, c).
-
 bucket_beam_test() ->
     Data = #{
         a => ok,
