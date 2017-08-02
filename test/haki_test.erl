@@ -106,6 +106,11 @@ bucket_syntax_test() ->
     not_ok = haki:get(test_bucket_syntax, b),
     #complex_record_test{} = haki:get(test_bucket_syntax, c).
 
+bucket_empty_syntax_test() ->
+    Data = #{},
+    haki:cache_bucket(test_bucket_empty_beam, Data, #{compiler => haki_syntax_compiler}),
+    bad_key = haki:get(test_bucket_empty_beam, some_key).
+
 -ifdef('HAS_BEAM_ASM').
 bucket_beam_test() ->
     Data = #{
@@ -119,6 +124,11 @@ bucket_beam_test() ->
     ok = haki:get(test_bucket_beam, a),
     not_ok = haki:get(test_bucket_beam, b),
     #complex_record_test{} = haki:get(test_bucket_beam, c).
+
+bucket_empty_beam_test() ->
+    Data = #{},
+    haki:cache_bucket(test_bucket_empty_beam, Data, #{compiler => haki_beam_compiler}),
+    bad_key = haki:get(test_bucket_empty_beam, some_key).
 -endif.
 
 snapshot_bucket_test() ->
