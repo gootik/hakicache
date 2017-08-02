@@ -108,11 +108,26 @@ beam_asm_bucket(ModName, Map) ->
             {NewLabels, I + 1}
         end, {[], 0}, Map),
 
-    UnknownKeyLabel = [
-        {label, NumKeys + 3},
-        {move, {atom, bad_key}, {x, 0}},
-        return
-    ],
+    UnknownKeyLabel = [{label, NumKeys + 3},
+                       {move, {atom, bad_key}, {x, 0}},
+                       return],
+
+    GetFunction = case NumKeys of
+        0 ->
+          [{move,{atom,bad_key},{x,0}},
+           return];
+        _ ->
+          [{test, is_atom, {f, NumKeys + 3}, [{x, 0}]},
+           {select_val,
+             {x,0},
+             {f, NumKeys + 3},
+             {list, SelectList}}] ++ KeyLabels ++ UnknownKeyLabel
+    end,
+
+    ModuleInfoPadding = case NumKeys of 
+        0 -> 0;
+        _ -> 1
+    end,
 
     Code = {ModName,
             [{get, 1}, {module_info, 0}, {module_info, 1}],
@@ -120,27 +135,21 @@ beam_asm_bucket(ModName, Map) ->
             [{function, get, 1, 2, [
                 {label, 1},
                 {func_info, {atom, ModName}, {atom, get}, 1},
-                {label, 2},
-                {test, is_atom, {f, NumKeys + 3}, [{x, 0}]},
-                {select_val,
-                 {x,0},
-                 {f, NumKeys + 3},
-                 {list, SelectList}}
-                ] ++ KeyLabels ++ UnknownKeyLabel},
+                {label, 2}] ++ GetFunction},
              {function,module_info,0,4,
-              [{label, NumKeys + 3 + 1},
+              [{label, NumKeys + 3 + ModuleInfoPadding},
                {func_info,{atom,ModName},{atom,module_info},0},
-               {label, NumKeys + 3 + 2},
+               {label, NumKeys + 3 + ModuleInfoPadding + 1},
                {move,{atom,ModName},{x,0}},
                {call_ext_only,1,{extfunc,erlang,get_module_info,1}}]},
              {function,module_info,1,6,
-              [{label,NumKeys + 3 + 3},
+              [{label,NumKeys + 3 + ModuleInfoPadding + 2},
                {func_info,{atom,ModName},{atom,module_info},1},
-               {label,NumKeys + 3 + 4},
+               {label,NumKeys + 3 + ModuleInfoPadding + 3},
                {move,{x,0},{x,1}},
                {move,{atom,ModName},{x,0}},
                {call_ext_only,2,{extfunc,erlang,get_module_info,2}}]}],
-            NumKeys + 3 + 5},
+            NumKeys + 3 + ModuleInfoPadding + 4},
 
     Chunks = [],
     Source = atom_to_list(ModName) ++ ".S",
