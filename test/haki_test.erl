@@ -81,16 +81,34 @@ record_syntax_test() ->
     haki:cache(test_record_syntax_key, Data, #{compiler => haki_syntax_compiler}),
     Data = haki:get(test_record_syntax_key).
 
+record_syntax_info_test() ->
+    Data = #complex_record_test{},
+    haki:cache(test_record_syntax_info_key, Data, #{compiler => haki_syntax_compiler}),
+    [{get,0},{module_info,0},{module_info,1}] = haki_test_record_syntax_info_key:module_info(exports),
+    [{module, haki_test_record_syntax_info_key} | _] = haki_test_record_syntax_info_key:module_info().
+
 record_asm_test() ->
     Data = #complex_record_test{},
     haki:cache(test_record_asm_key, Data, #{compiler => haki_asm_compiler}),
     Data = haki:get(test_record_asm_key).
+
+record_asm_info_test() ->
+    Data = #complex_record_test{},
+    haki:cache(test_record_asm_info_key, Data, #{compiler => haki_asm_compiler}),
+    [{get,0},{module_info,0},{module_info,1}] = haki_test_record_asm_info_key:module_info(exports),
+    [{module, haki_test_record_asm_info_key} | _] = haki_test_record_asm_info_key:module_info().
 
 -ifdef('HAS_BEAM_ASM').
 record_beam_test() ->
     Data = #complex_record_test{},
     haki:cache(test_record_beam_key, Data, #{compiler => haki_beam_compiler}),
     Data = haki:get(test_record_beam_key).
+
+record_beam_info_test() ->
+    Data = #complex_record_test{},
+    haki:cache(test_record_beam_info_key, Data, #{compiler => haki_beam_compiler}),
+    [{get,0},{module_info,0},{module_info,1}] = haki_test_record_beam_info_key:module_info(exports),
+    [{module, haki_test_record_beam_info_key} | _] = haki_test_record_beam_info_key:module_info().
 -endif.
 
 bucket_syntax_test() ->
@@ -105,6 +123,17 @@ bucket_syntax_test() ->
     ok = haki:get(test_bucket_syntax, a),
     not_ok = haki:get(test_bucket_syntax, b),
     #complex_record_test{} = haki:get(test_bucket_syntax, c).
+
+bucket_syntax_info_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    haki:cache_bucket(test_bucket_syntax_info, Data, #{compiler => haki_syntax_compiler}),
+    [{get,1},{module_info,0},{module_info,1}] = haki_test_bucket_syntax_info:module_info(exports),
+    [{module, haki_test_bucket_syntax_info} | _] = haki_test_bucket_syntax_info:module_info().
 
 bucket_empty_syntax_test() ->
     Data = #{},
@@ -124,6 +153,17 @@ bucket_beam_test() ->
     ok = haki:get(test_bucket_beam, a),
     not_ok = haki:get(test_bucket_beam, b),
     #complex_record_test{} = haki:get(test_bucket_beam, c).
+
+bucket_beam_info_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    haki:cache_bucket(test_bucket_beam_info, Data, #{compiler => haki_beam_compiler}),
+    [{get,1},{module_info,0},{module_info,1}] = haki_test_bucket_beam_info:module_info(exports),
+    [{module, haki_test_bucket_beam_info} | _] = haki_test_bucket_beam_info:module_info().
 
 bucket_empty_beam_test() ->
     Data = #{},
