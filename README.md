@@ -1,4 +1,4 @@
-Haki Cache [![Build Status](https://travis-ci.org/gootik/hakicache.svg?branch=master)](https://travis-ci.org/gootik/hakicache)
+Haki Cache [![Build Status](https://travis-ci.org/gootik/hakicache.svg?branch=master)](https://travis-ci.org/gootik/hakicache) [![Hex.pm](https://img.shields.io/hexpm/v/haki.svg)](https://hex.pm/packages/haki)
 =====
 
 Haki cache is a library that compiles your data into a static module
