@@ -18,6 +18,11 @@
 -define(timed(N, C), C).
 -endif.
 
+-define(DEFAULT_CACHE_OPTIONS, #{
+    compiler => haki_default_compiler,
+    save_binary => false
+}).
+
 -define(LARGE_LIST_LENGTH, 1000).
 
 -define(GET_FUNC, get).

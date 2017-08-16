@@ -52,7 +52,6 @@ compile_bucket(ModName, Val) ->
             Error
     end.
 
-
 -spec beam_asm(cache_module_name(), cache_value()) -> {ok, binary()} | error.
 beam_asm(ModName, Val) ->
     Code = {ModName,
