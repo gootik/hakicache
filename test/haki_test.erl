@@ -66,6 +66,11 @@ record_large_test() ->
     haki:cache(test_record_large_key, Data),
     Data = haki:get(test_record_large_key).
 
+record_large_syntax_test() ->
+    Data = [#complex_record_test{} || _ <- lists:seq(1, 2000)],
+    haki:cache(test_record_large_syntax_key, Data, #{compiler => haki_syntax_compiler}),
+    Data = haki:get(test_record_large_syntax_key).
+
 record_large_unicode_test() ->
     Data = [#complex_record_test{binary = <<"∆">>} || _ <- lists:seq(1, 2000)],
     haki:cache(test_record_large_unicode_key, Data),
@@ -110,6 +115,19 @@ record_beam_info_test() ->
     [{get,0},{module_info,0},{module_info,1}] = haki_test_record_beam_info_key:module_info(exports),
     [{module, haki_test_record_beam_info_key} | _] = haki_test_record_beam_info_key:module_info().
 -endif.
+
+bucket_default_test() ->
+    Data = #{
+        a => ok,
+        b => not_ok,
+        c => #complex_record_test{}
+    },
+
+    haki:cache_bucket(test_bucket_default, Data),
+
+    ok = haki:get(test_bucket_default, a),
+    not_ok = haki:get(test_bucket_default, b),
+    #complex_record_test{} = haki:get(test_bucket_default, c).
 
 bucket_syntax_test() ->
     Data = #{
