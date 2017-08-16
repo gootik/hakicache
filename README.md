@@ -1,4 +1,4 @@
-Haki Cache [![Build Status](https://travis-ci.org/gootik/hakicache.svg?branch=master)](https://travis-ci.org/gootik/hakicache)
+Haki Cache [![Build Status](https://travis-ci.org/gootik/hakicache.svg?branch=master)](https://travis-ci.org/gootik/hakicache) [![Hex.pm](https://img.shields.io/hexpm/v/haki.svg)](https://hex.pm/packages/haki)
 =====
 
 Haki cache is a library that compiles your data into a static module
@@ -67,7 +67,7 @@ available in OTP20:
 Erlang/OTP 20 [erts-9.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:0] [hipe] [kernel-poll:false]
 
 Eshell V9.0  (abort with ^G)
-1> haki:cache(some_haki_key, "VALUE", haki_beam_compiler).
+1> haki:cache(some_haki_key, "VALUE", #{compiler => haki_beam_compiler}).
 ok
 
 2> haki:get(some_haki_key).
@@ -83,7 +83,7 @@ avg. key length: 340
 
 lists:foreach(
   fun(K) ->
-     haki:cache(K, maps:get(K, Map), haki_beam_compiler)
+     haki:cache(K, maps:get(K, Map), #{compiler => haki_beam_compiler})
   end, maps:keys(Map)).
   
 Caching of 4554 keys took 1 minute and 55 seconds.

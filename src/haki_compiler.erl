@@ -38,7 +38,6 @@ compile(Key, Val, Options) ->
             ok
     end.
 
-
 -spec compile_bucket(cache_bucket_name(), cache_bucket_value(), cache_options()) -> ok.
 compile_bucket(Bucket, Map, Options) ->
     {ok, Binary} = case Options of

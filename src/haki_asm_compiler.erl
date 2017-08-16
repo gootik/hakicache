@@ -20,13 +20,12 @@
     compile/2
 ]).
 
-
 -spec compile(cache_module_name(), cache_value()) -> compile_ret().
 compile(ModName, Val) ->
     ModNameB = atom_to_binary(ModName, utf8),
 
     FileName = atom_to_list(ModName) ++ ".S",
-    {ok, File} = file:open(FileName, write),
+    {ok, File} = file:open(FileName, [write]),
 
     ValB = io_lib:format(<<"~p~n">>, [Val]),
     Asm = asm_template(ModNameB, ValB),

@@ -1,8 +1,3 @@
--define(DEFAULT_CACHE_OPTIONS, #{
-    compiler => haki_default_compiler,
-    save_binary => false
-}).
-
 -type cache_options() :: #{
     compiler => compiler() | haki_default_compiler,
     save_binary => boolean()
