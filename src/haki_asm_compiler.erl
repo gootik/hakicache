@@ -20,7 +20,6 @@
     compile/2
 ]).
 
-
 -spec compile(cache_module_name(), cache_value()) -> compile_ret().
 compile(ModName, Val) ->
     ModNameB = atom_to_binary(ModName, utf8),

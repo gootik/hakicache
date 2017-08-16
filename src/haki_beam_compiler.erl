@@ -18,7 +18,6 @@
     compile_bucket/2
 ]).
 
-
 -spec compile(cache_module_name(), cache_value()) -> compile_ret().
 compile(ModName, Val) ->
     Compile = beam_asm(ModName, Val),
