@@ -1,6 +1,6 @@
 {application,haki,
              [{description,"Haki Cache: Use the Erlang constant pool to compile your shared data into modules."},
-              {vsn,"0.3.0"},
+              {vsn,"0.3.1"},
               {registered,[]},
               {applications,[kernel,stdlib]},
               {env,[]},
