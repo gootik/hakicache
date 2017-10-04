@@ -12,12 +12,12 @@
 -include("types.hrl").
 
 -export([
-    compile/2,
-    compile_bucket/2
+    compile/3,
+    compile_bucket/3
 ]).
 
--spec compile(cache_module_name(), cache_value()) -> compile_ret().
-compile(ModName, Val) ->
+-spec compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
+compile(ModName, Val, _Options) ->
     Forms = forms(ModName, Val),
     Compile = ?timed(compile, compile:forms(Forms, ?COMPILER_OPTS)),
 
@@ -34,8 +34,8 @@ compile(ModName, Val) ->
             Error
     end.
 
--spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
-compile_bucket(ModName, Map) ->
+-spec compile_bucket(cache_module_name(), cache_bucket_value(), cache_options()) -> compile_ret().
+compile_bucket(ModName, Map, _Options) ->
     Forms = forms_bucket(ModName, Map),
     Compile = ?timed(compile, compile:forms(Forms, ?COMPILER_OPTS)),
 

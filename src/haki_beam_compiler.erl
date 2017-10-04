@@ -14,21 +14,26 @@
 -include("types.hrl").
 
 -export([
-    compile/2,
-    compile_bucket/2
+    compile/3,
+    compile_bucket/3
 ]).
 
--spec compile(cache_module_name(), cache_value()) -> compile_ret().
-compile(ModName, Val) ->
+-spec compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
+compile(ModName, Val, Options) ->
     Compile = beam_asm(ModName, Val),
 
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
-%%            F = atom_to_list(ModName) ++ ".erl",
-%%            {module, ModName} = code:load_binary(ModName, F, Bin),
 
-            erlang:load_module(ModName, Bin),
+            case Options of
+                #{load_strategy := native} ->
+                    erlang:load_module(ModName, Bin);
+                _ ->
+                    F = atom_to_list(ModName) ++ ".erl",
+                    {module, ModName} = code:load_binary(ModName, F, Bin)
+            end,
+
             {ok, Bin};
         Error ->
             error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
@@ -36,17 +41,22 @@ compile(ModName, Val) ->
             Error
     end.
 
--spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
-compile_bucket(ModName, Val) ->
+-spec compile_bucket(cache_module_name(), cache_bucket_value(), cache_options()) -> compile_ret().
+compile_bucket(ModName, Val, Options) ->
     Compile = beam_asm_bucket(ModName, Val),
 
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
-%%            F = atom_to_list(ModName) ++ ".erl",
-%%            {module, ModName} = code:load_binary(ModName, F, Bin),
 
-            erlang:load_module(ModName, Bin),
+            case Options of
+                #{load_strategy := native} ->
+                    erlang:load_module(ModName, Bin);
+                _ ->
+                    F = atom_to_list(ModName) ++ ".erl",
+                    {module, ModName} = code:load_binary(ModName, F, Bin)
+            end,
+
             {ok, Bin};
         Error ->
             error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),

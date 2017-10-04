@@ -1,6 +1,7 @@
 -type cache_options() :: #{
     compiler => compiler() | haki_default_compiler,
-    save_binary => boolean()
+    save_binary => boolean(),
+    load_strategy => code_server | native
 }.
 
 -type cache_module_name() :: atom().

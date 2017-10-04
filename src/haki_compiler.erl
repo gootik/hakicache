@@ -15,17 +15,17 @@
     mod_name/1
 ]).
 
--callback compile(cache_module_name(), cache_value()) -> compile_ret().
+-callback compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
 
 -spec compile(cache_key(), cache_value(), cache_options()) -> ok.
 compile(Key, Val, Options) ->
     {ok, Binary} = case Options of
         #{compiler := haki_default_compiler} ->
-            compile(Key, Val);
+            default_compile(Key, Val, Options);
 
         #{compiler := Compiler} ->
             ModName = mod_name(Key),
-            Compiler:compile(ModName, Val)
+            Compiler:compile(ModName, Val, Options)
     end,
 
     case Options of
@@ -43,11 +43,11 @@ compile_bucket(Bucket, Map, Options) ->
     {ok, Binary} = case Options of
        #{compiler := haki_default_compiler} ->
            ModName = mod_name(Bucket),
-           haki_syntax_compiler:compile_bucket(ModName, Map);
+           haki_syntax_compiler:compile_bucket(ModName, Map, Options);
 
        #{compiler := Compiler} ->
            ModName = mod_name(Bucket),
-           Compiler:compile_bucket(ModName, Map)
+           Compiler:compile_bucket(ModName, Map, Options)
     end,
 
     case Options of
@@ -60,14 +60,14 @@ compile_bucket(Bucket, Map, Options) ->
             ok
     end.
 
--spec compile(cache_key(), cache_value()) -> compile_ret().
-compile(Key, Val) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->
+-spec default_compile(cache_key(), cache_value(), cache_options()) -> compile_ret().
+default_compile(Key, Val, Options) when is_list(Val) andalso length(Val) > ?LARGE_LIST_LENGTH ->
     ModName = mod_name(Key),
-    haki_asm_compiler:compile(ModName, Val);
+    haki_asm_compiler:compile(ModName, Val, Options);
 
-compile(Key, Val) ->
+default_compile(Key, Val, Options) ->
     ModName = mod_name(Key),
-    haki_syntax_compiler:compile(ModName, Val).
+    haki_syntax_compiler:compile(ModName, Val, Options).
 
 -spec mod_name(cache_key()) -> atom().
 mod_name(Key) ->
