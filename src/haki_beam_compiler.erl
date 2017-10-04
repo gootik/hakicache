@@ -25,9 +25,10 @@ compile(ModName, Val) ->
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
-            F = atom_to_list(ModName) ++ ".erl",
-            {module, ModName} = code:load_binary(ModName, F, Bin),
+%%            F = atom_to_list(ModName) ++ ".erl",
+%%            {module, ModName} = code:load_binary(ModName, F, Bin),
 
+            erlang:load_module(ModName, Bin),
             {ok, Bin};
         Error ->
             error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
@@ -42,9 +43,10 @@ compile_bucket(ModName, Val) ->
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
-            F = atom_to_list(ModName) ++ ".erl",
-            {module, ModName} = code:load_binary(ModName, F, Bin),
+%%            F = atom_to_list(ModName) ++ ".erl",
+%%            {module, ModName} = code:load_binary(ModName, F, Bin),
 
+            erlang:load_module(ModName, Bin),
             {ok, Bin};
         Error ->
             error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
@@ -122,7 +124,7 @@ beam_asm_bucket(ModName, Map) ->
              {list, SelectList}}] ++ KeyLabels ++ UnknownKeyLabel
     end,
 
-    ModuleInfoPadding = case NumKeys of 
+    ModuleInfoPadding = case NumKeys of
         0 -> 0;
         _ -> 1
     end,
