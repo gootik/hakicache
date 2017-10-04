@@ -20,8 +20,7 @@
 
 -define(DEFAULT_CACHE_OPTIONS, #{
     compiler => haki_default_compiler,
-    save_binary => false,
-    load_strategy => code_server
+    save_binary => false
 }).
 
 -define(LARGE_LIST_LENGTH, 1000).
