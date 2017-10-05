@@ -70,7 +70,7 @@ cache_module_name() = atom()
 
 
 <pre><code>
-cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_snapshot =&gt; boolean()}
 </code></pre>
 
 

@@ -1,7 +1,8 @@
 %%%-------------------------------------------------------------------
 %%% @doc NOTE: Super hacky (but fast) at the moment. If you want to use
-%%%      this compiler you have to force it by forcing it. For example:
-%%%      haki:cache(K, V, haki_beam_compiler).
+%%%      this compiler you have to force it by setting the compiler in
+%%%      the options. For example:
+%%%      haki:cache(K, V, #{compiler => haki_beam_compiler}).
 %%%
 %%%      TODO: Explain what's going on.
 %%% @end
@@ -14,40 +15,42 @@
 -include("types.hrl").
 
 -export([
-    compile/2,
-    compile_bucket/2
+    compile/3,
+    compile_bucket/3
 ]).
 
--spec compile(cache_module_name(), cache_value()) -> compile_ret().
-compile(ModName, Val) ->
+-spec compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
+compile(ModName, Val, _Options) ->
     Compile = beam_asm(ModName, Val),
 
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
+
             F = atom_to_list(ModName) ++ ".erl",
             {module, ModName} = code:load_binary(ModName, F, Bin),
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_beam_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.
 
--spec compile_bucket(cache_module_name(), cache_bucket_value()) -> compile_ret().
-compile_bucket(ModName, Val) ->
+-spec compile_bucket(cache_module_name(), cache_bucket_value(), cache_options()) -> compile_ret().
+compile_bucket(ModName, Val, _Options) ->
     Compile = beam_asm_bucket(ModName, Val),
 
     case Compile of
         {ok, Bin} ->
             code:soft_purge(ModName),
+
             F = atom_to_list(ModName) ++ ".erl",
             {module, ModName} = code:load_binary(ModName, F, Bin),
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_beam_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.
@@ -122,7 +125,7 @@ beam_asm_bucket(ModName, Map) ->
              {list, SelectList}}] ++ KeyLabels ++ UnknownKeyLabel
     end,
 
-    ModuleInfoPadding = case NumKeys of 
+    ModuleInfoPadding = case NumKeys of
         0 -> 0;
         _ -> 1
     end,

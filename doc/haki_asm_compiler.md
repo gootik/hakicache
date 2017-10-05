@@ -70,7 +70,7 @@ cache_module_name() = atom()
 
 
 <pre><code>
-cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_snapshot =&gt; boolean()}
 </code></pre>
 
 
@@ -108,19 +108,19 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-2">compile/2</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
 
 ## Function Details ##
 
-<a name="compile-2"></a>
+<a name="compile-3"></a>
 
-### compile/2 ###
+### compile/3 ###
 
 <pre><code>
-compile(ModName::<a href="#type-cache_module_name">cache_module_name()</a>, Val::<a href="#type-cache_value">cache_value()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
+compile(ModName::<a href="#type-cache_module_name">cache_module_name()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
 </code></pre>
 <br />
 

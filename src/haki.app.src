@@ -4,8 +4,11 @@
               {registered,[]},
               {applications,[kernel,stdlib]},
               {env,[]},
-              {modules,[haki,haki_asm_compiler,haki_beam_compiler,
-                        haki_syntax_compiler,haki_compiler]},
+              {modules,[haki,
+                        haki_asm_compiler,
+                        haki_beam_compiler,
+                        haki_compiler,
+                        haki_syntax_compiler]},
               {maintainers,["Sasan Hezarkhani"]},
               {licenses,["MIT"]},
               {links,[{"Github","https://github.com/gootik/hakicache"}]}]}.

@@ -17,11 +17,11 @@
 -include("types.hrl").
 
 -export([
-    compile/2
+    compile/3
 ]).
 
--spec compile(cache_module_name(), cache_value()) -> compile_ret().
-compile(ModName, Val) ->
+-spec compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
+compile(ModName, Val, _Options) ->
     ModNameB = atom_to_binary(ModName, utf8),
 
     FileName = atom_to_list(ModName) ++ ".S",
@@ -44,7 +44,7 @@ compile(ModName, Val) ->
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_asm_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.
