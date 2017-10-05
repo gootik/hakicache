@@ -44,7 +44,7 @@ compile(ModName, Val, _Options) ->
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_asm_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.

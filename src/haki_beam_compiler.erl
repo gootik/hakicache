@@ -1,7 +1,8 @@
 %%%-------------------------------------------------------------------
 %%% @doc NOTE: Super hacky (but fast) at the moment. If you want to use
-%%%      this compiler you have to force it by forcing it. For example:
-%%%      haki:cache(K, V, haki_beam_compiler).
+%%%      this compiler you have to force it by setting the compiler in
+%%%      the options. For example:
+%%%      haki:cache(K, V, #{compiler => haki_beam_compiler}).
 %%%
 %%%      TODO: Explain what's going on.
 %%% @end
@@ -31,7 +32,7 @@ compile(ModName, Val, _Options) ->
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_beam_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.
@@ -49,7 +50,7 @@ compile_bucket(ModName, Val, _Options) ->
 
             {ok, Bin};
         Error ->
-            error_logger:error_msg("[hakicache] - Could not build module: ~p", [Error]),
+            error_logger:error_msg("[hakicache_beam_compiler] - Could not build module: ~p", [Error]),
 
             Error
     end.

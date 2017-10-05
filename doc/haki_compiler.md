@@ -9,7 +9,7 @@
 The compiler behavior and module that controls the compiling
 of the cache key/val.
 
-__This module defines the `haki_compiler` behaviour.__<br /> Required callback functions: `compile/2`.
+__This module defines the `haki_compiler` behaviour.__<br /> Required callback functions: `compile/3`.
 
 <a name="types"></a>
 
@@ -62,7 +62,7 @@ cache_module_name() = atom()
 
 
 <pre><code>
-cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_binary =&gt; boolean()}
+cache_options() = #{compiler =&gt; <a href="#type-compiler">compiler()</a> | haki_default_compiler, save_snapshot =&gt; boolean()}
 </code></pre>
 
 
