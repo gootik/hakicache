@@ -123,7 +123,18 @@ get_function_bucket(Map) ->
         Clauses).
 
 get_function_clause(Key, Val) ->
-    erl_syntax:clause([erl_syntax:atom(Key)], [], [erl_syntax:abstract(Val)]).
+    KeyClause = key_clause(Key),
+    erl_syntax:clause([KeyClause], [], [erl_syntax:abstract(Val)]).
 
 unknown_key_clause() ->
     erl_syntax:clause([erl_syntax:variable("_")], [], [erl_syntax:atom(bad_key)]).
+
+key_clause(Key) when is_atom(Key) ->
+    erl_syntax:atom(Key);
+
+key_clause(Key) when is_integer(Key) ->
+    erl_syntax:integer(Key);
+
+key_clause(Key) when is_binary(Key) ->
+    String = erl_syntax:string(binary_to_list(Key)),
+    erl_syntax:binary([erl_syntax:binary_field(String)]).
