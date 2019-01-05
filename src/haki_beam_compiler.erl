@@ -86,7 +86,7 @@ beam_asm(ModName, Val) ->
     Opts = ?COMPILER_OPTS,
     CompilerOpts = ?COMPILER_OPTS,
 
-    beam_asm:module(Code, Chunks, Opts, CompilerOpts).
+    call_asm_module(ModName, Code, Chunks, Opts, CompilerOpts).
 
 -spec beam_asm_bucket(cache_module_name(), cache_bucket_value()) -> {ok, binary()} | error.
 beam_asm_bucket(ModName, Map) ->
@@ -155,4 +155,13 @@ beam_asm_bucket(ModName, Map) ->
     Opts = ?COMPILER_OPTS,
     CompilerOpts = ?COMPILER_OPTS,
 
+    call_asm_module(ModName, Code, Chunks, Opts, CompilerOpts).
+
+-ifdef('OTP_21_PLUS').
+call_asm_module(_ModName, Code, Chunks, Opts, CompilerOpts) ->
     beam_asm:module(Code, Chunks, Opts, CompilerOpts).
+-else.
+call_asm_module(ModName, Code, Chunks, Opts, CompilerOpts) ->
+    Source = atom_to_list(ModName) ++ ".S",
+    beam_asm:module(Code, Chunks, Source, Opts, CompilerOpts).
+-endif.
