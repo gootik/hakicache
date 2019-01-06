@@ -9,7 +9,7 @@
 The compiler behavior and module that controls the compiling
 of the cache key/val.
 
-__This module defines the `haki_compiler` behaviour.__<br /> Required callback functions: `compile/3`.
+__This module defines the `haki_compiler` behaviour.__<br /> Required callback functions: `compile/3`, `compile_bucket/3`.
 
 <a name="types"></a>
 

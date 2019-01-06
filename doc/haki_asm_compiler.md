@@ -108,7 +108,7 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#compile-3">compile/3</a></td><td></td></tr><tr><td valign="top"><a href="#compile_bucket-3">compile_bucket/3</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -121,6 +121,15 @@ compiler() = haki_syntax_compiler | haki_beam_compiler | haki_asm_compiler
 
 <pre><code>
 compile(ModName::<a href="#type-cache_module_name">cache_module_name()</a>, Val::<a href="#type-cache_value">cache_value()</a>, Options::<a href="#type-cache_options">cache_options()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
+</code></pre>
+<br />
+
+<a name="compile_bucket-3"></a>
+
+### compile_bucket/3 ###
+
+<pre><code>
+compile_bucket(Bucket::<a href="#type-cache_bucket_name">cache_bucket_name()</a>, Vals::<a href="#type-cache_bucket_value">cache_bucket_value()</a>, Opts::<a href="#type-cache_options">cache_options()</a>) -&gt; <a href="#type-compile_ret">compile_ret()</a>
 </code></pre>
 <br />
 
