@@ -6,7 +6,7 @@
 %%%
 %%%         Syntax - Used for all other cases.
 %%%
-%%%         Beam - This is experimental and only works for OTP20+
+%%%         BEAM - This is experimental and only works for OTP20+
 %%% @end
 %%%-------------------------------------------------------------------
 -module(haki).

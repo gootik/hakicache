@@ -16,6 +16,7 @@
 ]).
 
 -callback compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
+-callback compile_bucket(cache_bucket_name(), cache_bucket_value(), cache_options()) -> compile_ret().
 
 -spec compile(cache_key(), cache_value(), cache_options()) -> ok.
 compile(Key, Val, Options) ->

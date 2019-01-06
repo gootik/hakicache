@@ -17,7 +17,8 @@
 -include("types.hrl").
 
 -export([
-    compile/3
+    compile/3,
+    compile_bucket/3
 ]).
 
 -spec compile(cache_module_name(), cache_value(), cache_options()) -> compile_ret().
@@ -49,7 +50,11 @@ compile(ModName, Val, _Options) ->
             Error
     end.
 
--spec asm_template(binary(), binary()) -> binary().
+-spec compile_bucket(cache_bucket_name(), cache_bucket_value(), cache_options()) -> compile_ret().
+compile_bucket(_Bucket, _Vals, _Opts) ->
+    throw(not_implemented).
+
+-spec asm_template(binary(), binary() | list()) -> binary().
 asm_template(ModName, BinaryVal) ->
     Template = [
         %% Header
