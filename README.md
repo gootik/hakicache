@@ -60,9 +60,9 @@ bad_key
 The `haki_beam` compiler skips all the steps that is required
 to go from a `.S` file to a binary representation of the module.
 The specifics of the BEAM file format is available here: https://happi.github.io/theBeamBook/#CH-beam_modules.
-In OTP20 we can piggy back the `beam_asm` module and directly get a 
+In OTP20+ we can piggy back the `beam_asm` module and directly get a 
 binary BEAM format. This is how `haki_beam_compiler` works and it is only
-available in OTP20: 
+available in OTP20+: 
 ```erlang
 Erlang/OTP 20 [erts-9.0] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:0] [hipe] [kernel-poll:false]
 
